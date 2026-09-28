@@ -1,0 +1,782 @@
+<!DOCTYPE html>
+<html dir="rtl">
+<head>
+<meta charset="UTF-8">
+<link rel="manifest" href="manifest.json">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>زیارت امام زمانہؑ</title>
+<style>
+  @font-face {
+    font-family: 'Quran';
+    src: url('font/quran.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+  }
+   @font-face {
+    font-family: 'Quran1';
+    src: url('font/quran2.otf') format('opentype');
+    font-weight: normal;
+    font-style: normal;
+  }
+  @font-face {
+    font-family: 'Mehr';
+    src: url('font/mehr.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+  }
+  
+  body { 
+    font-family: 'Mehr', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; 
+    padding: 0; 
+    margin: 0; 
+    background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+    min-height: 100vh;
+    text-align: center;
+    max-width: 100%;
+    overflow-x: hidden;
+  }
+  
+  .header {
+    background: linear-gradient(135deg, #1a2a6c, #b21f1f, #fdbb2d);
+    color: white;
+    padding: 5px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+    border-bottom: 5px solid #fdbb2d;
+    position: fixed;
+    top: 0;
+    width: 100%;
+    z-index: 1000;
+    box-sizing: border-box;
+  }
+  
+  .header-content {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 5px;
+  }
+  
+  .nav-toggle {
+    background: none;
+    border: none;
+    color: white;
+    font-size: 24px;
+    cursor: pointer;
+    padding: 5px;
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+  }
+  
+  .nav-toggle span {
+    display: block;
+    width: 25px;
+    height: 3px;
+    background: white;
+    border-radius: 2px;
+  }
+  
+  .header h1 {
+    margin: 0;
+    font-size: 1.5em;
+    font-weight: bold;
+    text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+    text-align: center;
+    flex-grow: 1;
+  }
+  
+  .controls {
+    display: flex;
+    gap: 5px;
+    align-items: center;
+  }
+  
+  .radio-group {
+    display: flex;
+    gap: 4px;
+    background: rgba(255,255,255,0.1);
+    padding: 6px 10px;
+    border-radius: 20px;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+  
+  .radio-label {
+    display: flex;
+    align-items: center;
+    gap: 3px;
+    cursor: pointer;
+    font-size: 12px;
+    white-space: nowrap;
+  }
+  
+  .radio-label input {
+    margin: 0;
+  }
+  
+  .settings-btn {
+    background: rgba(255,255,255,0.2);
+    color: white;
+    border-radius: 50%;
+    cursor: pointer;
+    font-size: 16px;
+    transition: all 0.3s;
+    min-width: 35px;
+    min-height: 35px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: none;
+  }
+  
+  .settings-btn:hover {
+    background: white;
+    color: #1a2a6c;
+  }
+  
+  .nav-menu {
+    position: fixed;
+    top: 60px;
+    right: -100%;
+    width: 250px;
+    height: calc(100vh - 60px);
+    background: linear-gradient(135deg, #1a2a6c, #b21f1f);
+    transition: right 0.3s ease;
+    z-index: 999;
+    padding: 20px;
+    box-shadow: -5px 0 15px rgba(0,0,0,0.3);
+  }
+  
+  .nav-menu.active {
+    right: 0;
+  }
+  
+  .nav-menu a {
+    display: block;
+    color: white;
+    text-decoration: none;
+    font-size: 18px;
+    padding: 15px;
+    margin: 10px 0;
+    border-radius: 8px;
+    text-align: right;
+    transition: background 0.3s;
+    border-right: 3px solid #fdbb2d;
+  }
+  
+  .nav-menu a:hover {
+    background: rgba(255,255,255,0.2);
+  }
+  
+  .content {
+    max-width: 100%;
+    margin: 50px auto 0px;
+    padding: 15px;
+    text-align: center;
+    box-sizing: border-box;
+  }
+  
+  .col2 { 
+    font-family: 'Quran1', 'Traditional Arabic', 'Segoe UI', sans-serif;
+    font-size: 40px;
+    font-weight: 500;
+  color: black;
+  margin-bottom: 6px;
+  line-height: 1.7;
+  text-shadow: 0 1px 1px rgba(255,255,255,0.6);
+  text-align: center;
+  padding: 12px 8px;
+  background: rgba(193, 198, 152, 0.92);
+  border-right: 5px solid #7BC9F4;
+  border-radius: 20px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+  }
+  
+  .col3 { 
+    font-family: 'Mehr', 'Nastaleeq', 'Segoe UI', sans-serif;
+   color: black;
+  margin-bottom: 8px;
+  background: rgba(229, 232, 209, 0.95);
+  padding: 12px 12px;
+  border-radius: 20px;
+  border-right: 5px solid #fdbb2d;
+  line-height: 1.6;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+  text-align: center;
+  }
+  
+  .footer {
+    text-align: center;
+    padding: 5px;
+    background: #C5C9C1;
+    color: white;
+    margin-top: 5px;
+    font-size: 14px;
+  }
+  
+  .footer a {
+    color: #fdbb2d;
+    text-decoration: none;
+    font-weight: bold;
+  }
+  
+  .decoration {
+    text-align: center;
+    margin: 5px 0;
+    font-size: 20px;
+    color: #fdbb2d;
+  }
+  
+  .overlay {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,0.5);
+    z-index: 998;
+  }
+  
+  .overlay.active {
+    display: block;
+  }
+  
+  /* Settings Popup */
+  .settings-popup {
+    display: none;
+    position: fixed;
+    top: 25%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: white;
+    padding: 10px;
+    border-radius: 10px;
+    box-shadow: 0 5px 20px rgba(0,0,0,0.3);
+    z-index: 1001;
+    width: 80%;
+    max-width: 320px;
+    text-align: center;
+  }
+  
+  .settings-popup h3 {
+    margin-top: 0;
+    color: #1a2a6c;
+    border-bottom: 2px solid #fdbb2d;
+    padding-bottom: 10px;
+  }
+  
+  .settings-option {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 1px 0;
+    padding: 5px;
+    background: #f8f9fa;
+    border-radius: 5px;
+  }
+  
+  .settings-option label {
+    font-weight: bold;
+    color: #1a2a6c;
+    font-size: 14px;
+  }
+  
+  .font-size-controls {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  
+  .font-size-display {
+    min-width: 40px;
+    text-align: center;
+    font-weight: bold;
+    color: #1a2a6c;
+  }
+  
+  .font-size-btn {
+    background: #1a2a6c;
+    color: white;
+    border: none;
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: bold;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .font-size-btn:hover {
+    background: #b21f1f;
+  }
+  
+  .font-size-btn:disabled {
+    background: #cccccc;
+    cursor: not-allowed;
+  }
+  
+  .close-settings {
+    background: #b21f1f;
+    color: white;
+    border: none;
+    padding: 8px 15px;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-top: 10px;
+    width: 100%;
+    font-size: 16px;
+  }
+  
+  .close-settings:hover {
+    background: #1a2a6c;
+  }
+  
+  /* Scroll to Top Button */
+  .scroll-to-top {
+    position: fixed;
+    bottom: 20px;
+    left: 20px;
+    background: linear-gradient(135deg, #1a2a6c, #b21f1f);
+    color: white;
+    border: none;
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
+    font-size: 36px;
+    cursor: pointer;
+    box-shadow: 0 3px 10px rgba(0,0,0,0.2);
+    z-index: 999;
+    display: none;
+    transition: all 0.3s;
+  }
+  
+  
+  .scroll-to-top:active {
+    transform: translateY(0);
+  }
+  
+  .scroll-to-top:hover {
+    background: #b21f1f;
+    transform: translateY(-3px);
+  }
+  
+  /* Mobile-specific optimizations */
+  @media (max-width: 480px) {
+    .header h1 {
+      font-size: 1.3em;
+    }
+    
+    .radio-group {
+      gap: 5px;
+      padding: 5px;
+    }
+    
+    .radio-label {
+      font-size: 11px;
+    }
+    
+    .col2 {
+      font-size: 36px;
+    }
+    
+    .col3 {
+      font-size: 32px;
+    }
+    
+    .content {
+      padding: 10px 10px 0px;
+      margin-top: 5px;
+    }
+    
+    .settings-popup {
+      width: 50%;
+      padding: 10px;
+    }
+  }
+  
+  @media (max-width: 360px) {
+    .header h1 {
+      font-size: 1.1em;
+    }
+    
+    .radio-group {
+      display: none;
+    }
+    
+    .col2 {
+      font-size: 36px;
+    }
+    
+    .col3 {
+      font-size: 34px;
+    }
+    
+    .settings-option {
+      flex-direction: column;
+      gap: 10px;
+    }
+    
+    .font-size-controls {
+      justify-content: center;
+    }
+  }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <div class="header-content">
+    <!-- 3-line navigation toggle -->
+    <button class="nav-toggle" onclick="toggleNav()">
+      <span></span>
+      <span></span>
+      <span></span>
+    </button>
+    
+    <h1>زیارت امام زمانہ (عج)</h1>
+    
+    <div class="controls">
+      <!-- Radio Buttons -->
+      <div class="radio-group">
+        <label class="radio-label">
+          <input type="radio" name="language" value="both" checked>
+          عربی+اردو
+        </label>
+        <label class="radio-label">
+          <input type="radio" name="language" value="arabic">
+          عربی
+        </label>
+        <label class="radio-label">
+          <input type="radio" name="language" value="urdu">
+          اردو
+        </label>
+      </div>
+      
+      <!-- Settings Button -->
+      <button class="settings-btn" title="Settings" onclick="toggleSettings()">
+        ⚙️
+      </button>
+    </div>
+  </div>
+</div>
+
+<!-- Navigation Menu -->
+<nav id="navMenu" class="nav-menu">
+  <a href="#home" onclick="toggleNav()">ہوم</a>
+  <a href="#about" onclick="toggleNav()">تعارف</a>
+  <a href="#contact" onclick="toggleNav()">رابطہ</a>
+  <a href="#favorites" onclick="toggleNav()">پسندیدہ</a>
+  <a href="#settings" onclick="toggleNav()">ترتیبات</a>
+</nav>
+
+<!-- Settings Popup -->
+<div id="settingsPopup" class="settings-popup">
+  <h3>فونٹ سائز ترتیبات</h3>
+  
+  <!-- Arabic Font Size Control -->
+  <div class="settings-option">
+    <label>عربی فونٹ سائز</label>
+    <div class="font-size-controls">
+      <button class="font-size-btn" id="arabicMinusBtn" onclick="changeArabicFontSize(-2)">-</button>
+      <span class="font-size-display" id="arabicFontSize">40px</span>
+      <button class="font-size-btn" id="arabicPlusBtn" onclick="changeArabicFontSize(2)">+</button>
+    </div>
+  </div>
+  
+  <!-- Urdu Font Size Control -->
+  <div class="settings-option">
+    <label>اردو فونٹ سائز</label>
+    <div class="font-size-controls">
+      <button class="font-size-btn" id="urduMinusBtn" onclick="changeUrduFontSize(-2)">-</button>
+      <span class="font-size-display" id="urduFontSize">30px</span>
+      <button class="font-size-btn" id="urduPlusBtn" onclick="changeUrduFontSize(2)">+</button>
+    </div>
+  </div>
+  
+  <button class="close-settings" onclick="toggleSettings()">بند کریں</button>
+</div>
+
+<!-- Overlay for closing nav menu and settings -->
+<div class="overlay" id="overlay" onclick="closeAll()"></div>
+
+<!-- Scroll to Top Button -->
+<button class="scroll-to-top" id="scrollToTop" onclick="scrollToTop()">⇑</button>
+
+<div class="content">
+  <div class="col2">بِسْـمِ اللّٰهِ الـرَّحْـمٰنِ الرَّحِـيْمِ</div>
+<div class="col3">عظيم اور دائمي رحمتوں والے خدا کے نام سے</div>
+
+<div class="col2">اَلسَّلَامُ عَلَيْكَ يَا حُجَّةَ اللّٰهِ فِيْٓ اَرْضِهٖ</div>
+  <div class="col3">آپؑ پر سلام ہو جو خدا کی زمین میں اس کی حجت ہیں</div>
+
+<div class="col2">اَلسَّلَامُ عَلَيْكَ يَا عَيْنَ اللّٰهِ فِيْ خَلْقِهٖ</div>
+  <div class="col3">آپؑ پر سلام ہو جو خدا کی مخلوق میں اس کی آنکھ ہیں</div>
+
+<div class="col2">اَلسَّلَامُ عَلَيْكَ يَا نُوْرَ اللّٰهِ الَّذِيْ يَهْتَدِيْ بِهِ الْمُهْتَدُوْنَ</div>
+  <div class="col3">آپؑ پر سلام ہو جو خدا کے وہ نور ہیں جس سے ہدایت چاہنے والے ہدایت پاتے ہیں</div>
+
+<div class="col2">وَ يُفَرَّ جُ بِهٖ عَنِ الْمُوْمِنِيْنَ</div>
+<div class="col3">اور جس سے مومنوں کو کشادگي ملتي ہے</div>
+
+
+<div class="col2">اَلسَّلَامُ عَلَيْكَ اَيُّهَا الْمُهَذَّبُ الْخَائِفُ</div>
+<div class="col3">آپؑ پر سلام ہو جو نيک طينت ڈرنے والے ہيں</div>
+
+
+<div class="col2">اَلسَّلَامُ عَلَيْكَ اَيُّهَا الْوَلِيُّ النَّاصِحُ</div>
+<div class="col3">آپؑ پر سلام ہو اے خير خواه و سرپرست</div>
+
+
+<div class="col2">اَلسَّلَامُ عَلَيْكَ يَا سَفِيْنَةَ النَّجَاةِ</div>
+  <div class="col3">آپؑ پر سلام ہو اے کشتئ نجات</div>
+
+<div class="col2">اَلسَّلَامُ عَلَيْكَ يَا عَيْنَ الْحَيٰوةِ </div>
+  <div class="col3">آپؑ پر سلام ہو اے چشمۂ حیات</div>
+
+<div class="col2">اَلسَّلَامُ عَلَيْكَ صَلَّي اللّٰهُ عَلَيْكَ وَ عَلٰي آلِ بَيْتِكَ الطَّيِّبِيْنَ الطَّاهِرِيْنَ</div>
+  <div class="col3">آپؑ پر سلام ہو خدا کی رحمت ہو آپؑ پر اور آپؑ کے پاک و پاکیزہ خاندانؑ پر</div>
+    
+<div class="col2">اَلسَّلَامُ عَلَيْكَ عَجَّلَ اللّٰهُ لَكَ مَا وَعَدَكَ مِنَ النَّصْرِ وَ ظُهُوْرِ الْاَمْرِ</div>
+  <div class="col3">آپؑ پر سلام ہو خدا جلدی کرے اس امر کے ظہور اور نصرت میں جس کا وعدہ اس نے آپؑ سے کیا ہے</div>
+
+<div class="col2">اَلسَّلَامُ عَلَيْكَ يَا مَوْلَايَ</div>
+<div class="col3">آپؑ پر سلام ہو اے ميرے سردار</div>
+
+
+<div class="col2">اَنَا مَوْلَاكَ عَارِفٌۭ بِاُوْلِيٰكَ وَ اُخْرٰكَ</div>
+<div class="col3">ميں آپؑ کا غلام ہوں آپؑ کے آغاز و انجام سے واقف ہوں</div>
+
+
+<div class="col2">اَتَقَرَّبُ اِلَي اللّٰهِ تَعَالٰي بِكَ وَ بِاٰلِ بَيْتِكَ</div>
+  <div class="col3">میں خدا کا قرب چاہتا ہوں آپؑ کے اور آپؑ کے خاندان کے و سیلے سے</div>
+
+<div class="col2">وَ اَنْتَظِرُ ظُهُوْرَكَ وَ ظُهُوْرَ الْحَقِّ عَلٰي يَدَيْكَ </div>
+  <div class="col3">اور انتظار کرتا ہوں آپؑ کے ظہور اور آپؑ کے ہاتھوں حق کے ظہور کا</div>
+
+<div class="col2">وَ اَسْئَلُ اللّٰهَ اَنْ يُّصَلِّي عَلٰي مُحَمَّدٍ وَّ اٰلِ مُحَمَّدٍ </div>
+<div class="col3">اور خدا سے سوال کرتا ہوں که وه محمدؐ و آلؑ محمدؐ پر رحمت فرمائے</div>
+
+
+<div class="col2">وَّ اَنْ يَّجْعَلَنِيْ مِنَ الْمُنْتَظِرِيْنَ لَكَ </div>
+  <div class="col3">اور مجھے قرار دے آپؑ کے انتظار کرنے والوں میں </div>
+
+<div class="col2">وَ التَّابِعِيْنَ وَ النَّاصِرِيْنَ لَكَ عَلٰٓي اَعْدَآئِكَ </div>
+<div class="col3">اور آپؑ کي پيروي کرنے والوں اور آپؑ کے دشمنوں کے مقابل آپؑ کے مددگاروں</div>
+
+
+<div class="col2">وَ الْمُسْتَشْهَدِيْنَ بَيْنَ يَدَيْكَ فِيْ جُمْلَةِ اَوْلِيَآئِكَ </div>
+<div class="col3">اور آپؑ کے سامنے شهيد هونے والے اورآپؑ کے دوستوں ميں سے قرار دے</div>
+
+
+<div class="col2">يَا مَوْلَايَ يَا صَاحِبَ الزَّمَانِ صَلَوَاتُ اللّٰهِ عَلَيْكَ وَ عَلٰي آلِ بَيْتِكَ</div>
+<div class="col3">اے ميرے آقا اے صاحب زماں آپؑ پر اور آپؑ کے خاندانؑ پر خدا کي رحمتيں هوں</div>
+
+
+<div class="col2">هٰذَا يَوْمُ الْجُمُعَةِ وَهُوَ يَوْمُكَ الْمُتَوَقَّعُ فِيْهِ ظُهُوْرُكَ </div>
+<div class="col3">يه جمعه کا دن هے جو آپؑ کا دن هے جس ميں توقع رکهتا هوں آپؑ کے ظهور کي </div>
+
+
+<div class="col2">وَ الْفَرَجُ فِيْهِ لِلْمُوْمِنِيْنَ عَلٰي يَدَيْكَ </div>
+<div class="col3">اور آپؑ کے ذريعے مومنوں کي آسودگي کي</div>
+
+
+<div class="col2">وَقَتْلُ الْكَافِرِيْنَ بِسَيْفِكَ </div>
+<div class="col3">اور آپ کي تلوار سے کافروں کے قتل کي اميد هے</div>
+
+
+<div class="col2">وَ اَنَا يَا مَوْلَايَ فِيْهِ ضَيْفُكَ وَ جَارُكَ </div>
+<div class="col3">اور اے ميرے آقا ميں آج کے دن آپ کي پناه ميں هوں</div>
+
+
+<div class="col2">وَ اَنْتَ يَا مَوْلَايَ كَرِيْمٌ مِّنْ اَوْلَادِ الْكِرَامِ</div>
+<div class="col3">اور اے ميرے آقا آپ کريم اور کريموں کي اولاد سے هيں</div>
+
+
+<div class="col2">وَ مَاْمُوْرٌۭ بِالضِّيَافَةِ وَالْاِجَارَةِ</div>
+<div class="col3">اور مهمان رکهنے اور پناه دينے پر مامور هيں</div>
+
+
+<div class="col2"> فَاَضِفْنِيْ وَ اَجِرْنِيْ </div>
+<div class="col3">پس مجهے مهمان کيجيے اور پناه ديجئے</div>
+
+
+<div class="col2">صَلَوَاتُ اللّٰهِ عَلَيْكَ وَ عَلٰٓي اَهْلِ بَيْتِكَ الطَّاهِرِيْنَ</div>
+  <div class="col3">آپؑ پر اور آپؑ کے پاک و پاکیزہ اہل خاندان پر خدا تعالیٰ کی رحمتیں ہوں</div>
+
+<div class="decoration">❁❁❁</div>
+
+
+  <div class="col3">سید بن طاؤس کہتے ہیں میں اس زیارت کے بعد اس شعر کی طرف متوجہ ہوتا ہوں اور امام زمانہؑ کی طرف اشارہ کر کے کہتا ہوں</div>
+  <div class="col2">نَزَيْلُكَ حَيْثُ مَا اتَّجَهَتْ رِكَابِىْ وَ ضَيْفُكَ حَيْثُ كُنْتُ مِنَ الْبِلَادِ</div>
+  <div class="col3">میری سواری مجھے جہاں بھی لے جائے میں آپؑ  ہی کا مہمان ہوں اور شہروں میں سے جس شہر میں رہوں وہاں بھی آپکا مہمان ہوں</div>
+    <div class="decoration">❁❁❁</div>
+
+  
+</div>
+
+<div class="footer">
+  
+</div>
+
+<script>
+  // Font size state
+  let arabicFontSize = 40;
+  let urduFontSize = 32;
+  
+  // Minimum and maximum font sizes
+  const MIN_FONT_SIZE = 31;
+  const MAX_FONT_SIZE = 100;
+
+  // Navigation toggle function
+  function toggleNav() {
+    const navMenu = document.getElementById('navMenu');
+    const overlay = document.getElementById('overlay');
+    navMenu.classList.toggle('active');
+    overlay.classList.toggle('active');
+  }
+
+  // Settings popup toggle function
+  function toggleSettings() {
+    const settingsPopup = document.getElementById('settingsPopup');
+    const overlay = document.getElementById('overlay');
+    settingsPopup.style.display = settingsPopup.style.display === 'block' ? 'none' : 'block';
+    overlay.classList.toggle('active');
+    
+    // Update button states when settings open
+    updateButtonStates();
+  }
+
+  // Close all popups
+  function closeAll() {
+    document.getElementById('navMenu').classList.remove('active');
+    document.getElementById('settingsPopup').style.display = 'none';
+    document.getElementById('overlay').classList.remove('active');
+  }
+
+  // Change Arabic font size
+  function changeArabicFontSize(change) {
+    const newSize = arabicFontSize + change;
+    
+    if (newSize >= MIN_FONT_SIZE && newSize <= MAX_FONT_SIZE) {
+      arabicFontSize = newSize;
+      updateArabicFontSize();
+      updateButtonStates();
+    }
+  }
+
+  // Change Urdu font size
+  function changeUrduFontSize(change) {
+    const newSize = urduFontSize + change;
+    
+    if (newSize >= MIN_FONT_SIZE && newSize <= MAX_FONT_SIZE) {
+      urduFontSize = newSize;
+      updateUrduFontSize();
+      updateButtonStates();
+    }
+  }
+
+  // Update Arabic font size in DOM
+  function updateArabicFontSize() {
+    const arabicElements = document.querySelectorAll('.col2');
+    arabicElements.forEach(el => {
+      el.style.fontSize = arabicFontSize + 'px';
+    });
+    document.getElementById('arabicFontSize').textContent = arabicFontSize + 'px';
+  }
+
+  // Update Urdu font size in DOM
+  function updateUrduFontSize() {
+    const urduElements = document.querySelectorAll('.col3');
+    urduElements.forEach(el => {
+      el.style.fontSize = urduFontSize + 'px';
+    });
+    document.getElementById('urduFontSize').textContent = urduFontSize + 'px';
+  }
+
+  // Update button states (enable/disable)
+  function updateButtonStates() {
+    // Arabic buttons
+    document.getElementById('arabicMinusBtn').disabled = arabicFontSize <= MIN_FONT_SIZE;
+    document.getElementById('arabicPlusBtn').disabled = arabicFontSize >= MAX_FONT_SIZE;
+    
+    // Urdu buttons
+    document.getElementById('urduMinusBtn').disabled = urduFontSize <= MIN_FONT_SIZE;
+    document.getElementById('urduPlusBtn').disabled = urduFontSize >= MAX_FONT_SIZE;
+  }
+
+  // Language selection functionality
+  document.querySelectorAll('input[name="language"]').forEach(radio => {
+    radio.addEventListener('change', function() {
+      const arabicElements = document.querySelectorAll('.col2');
+      const urduElements = document.querySelectorAll('.col3');
+      
+      if (this.value === 'arabic') {
+        arabicElements.forEach(el => el.style.display = 'block');
+        urduElements.forEach(el => el.style.display = 'none');
+      } else if (this.value === 'urdu') {
+        arabicElements.forEach(el => el.style.display = 'none');
+        urduElements.forEach(el => el.style.display = 'block');
+      } else {
+        arabicElements.forEach(el => el.style.display = 'block');
+        urduElements.forEach(el => el.style.display = 'block');
+      }
+    });
+  });
+
+  // Scroll to top functionality
+  const scrollToTopBtn = document.getElementById('scrollToTop');
+  
+  window.addEventListener('scroll', function() {
+    if (window.pageYOffset > 300) {
+      scrollToTopBtn.style.display = 'block';
+    } else {
+      scrollToTopBtn.style.display = 'none';
+    }
+  });
+  
+  function scrollToTop() {
+    window.scrollTo({
+      top: 0,
+      behavior: 'smooth'
+    });
+  }
+
+  // Close nav when clicking outside
+  document.getElementById('overlay').addEventListener('click', closeAll);
+
+  // Mobile-specific optimizations
+  document.addEventListener('touchstart', function() {}, {passive: true});
+
+  // Initialize font sizes on load
+  document.addEventListener('DOMContentLoaded', function() {
+    updateArabicFontSize();
+    updateUrduFontSize();
+    updateButtonStates();
+  });
+</script>
+
+</body>
+<script>
+        window.addEventListener('load', () => {
+          registerSW();
+        });
+     
+        // Register the Service Worker
+        async function registerSW() {
+          if ('serviceWorker' in navigator) {
+            try {
+              await navigator
+                    .serviceWorker
+                    .register('serviceworker.js');
+            }
+            catch (e) {
+              console.log('SW registration failed');
+            }
+          }
+        }
+     </script>
+</html>
