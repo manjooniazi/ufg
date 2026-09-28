@@ -1,22 +1,42 @@
 {
-    "name":"Ziarat Juma",
-    "short_name":"ZJA",
-    "start_url":"index.html",
-    "display":"standalone",
-    "background_color":"#5900b3",
-    "theme_color":"black",
-    "scope": ".",
-    "description":"Ziarat e Juma Imam Asar as.",
-    "icons":[
+  "name": "Ziarat Juma",
+  "short_name": "ZJA",
+  "id": "./",
+  "start_url": "index.html",
+  "display": "standalone",
+  "display_override": ["standalone"],
+  "orientation": "portrait",
+  "background_color": "#5900b3",
+  "theme_color": "black",
+  "scope": ".",
+  "description": "Ziarat e Juma Imam Asar as.",
+  "lang": "ur",
+  "dir": "rtl",
+  "categories": ["books", "lifestyle"],
+  "launch_handler": {"client_mode": "focus-existing"},
+  "shortcuts": [
+    {"name": "Home", "url": "index.html#home"},
+    {"name": "Favorites", "url": "index.html#favorites"},
+    {"name": "Settings", "url": "index.html#settings"}
+  ],
+  "screenshots": [
     {
-    "src":"images/icon-192x192.png",                     
-    "sizes":"192x192",
-    "type":"image/png"
+      "src": "images/screenshot-wide.png",
+      "sizes": "1365x768",
+      "type": "image/png",
+      "form_factor": "wide",
+      "label": "Desktop"
     },
     {
-    "src":"images/icon-512x512.png",
-    "sizes":"512x512",
-    "type":"image/png"
+      "src": "images/screenshot-narrow.png",
+      "sizes": "390x844",
+      "type": "image/png",
+      "form_factor": "narrow",
+      "label": "Mobile"
     }
+  ],
+  "icons": [
+    {"src": "images/icon-192x192.png", "sizes": "192x192", "type": "image/png"},
+    {"src": "images/icon-512x512.png", "sizes": "512x512", "type": "image/png"}
   ]
 }
